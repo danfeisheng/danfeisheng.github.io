@@ -9,3 +9,6 @@ Here is danfei's page.
 3._config文件修改：theme: "theme-name"  
 4.安装theme 打开Git bash，进到repo目录，运行gem install theme-name  
 5.启动jekyll本地预览 bundle exec jekyll serve  
+
+问题：  
+theme在本地启动jekyll服务能使用，但是push到github page上之后没有theme效果
