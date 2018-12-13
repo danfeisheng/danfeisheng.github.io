@@ -48,8 +48,7 @@ public class PassTest {
 	}
 }
 
-#=> prints 'Hello world' to console.
 {% endhighlight %}
 
 
-java 中的值传递还是引用传递的问题，首先java中是值传递，对调用的方法里改了引用是指影响该方法的，对原方法没有影响，传递的是copy的副本，浅copy，copy出来的对象引用的内容仍旧和原对像一样，像这里的name和age，在方法里改了也影响原对象。
+java 中的值传递还是引用传递的问题，首先java中是值传递，对调用的方法里改了引用是只影响该方法的，对原方法没有影响，传递的是copy的副本，浅copy，copy出来的对象引用的内容仍旧和原对像一样，像这里的name和age，在方法里改了也影响原对象。

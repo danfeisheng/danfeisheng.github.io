@@ -140,11 +140,9 @@
 		<span class="no">System</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">println</span><span class="p">(</span><span class="n">t2</span><span class="p">.</span><span class="nf">name</span> <span class="o">+</span> <span class="s2">", "</span> <span class="o">+</span> <span class="n">t2</span><span class="p">.</span><span class="nf">age</span><span class="p">);</span>
 		<span class="n">t</span> <span class="o">=</span> <span class="n">t2</span><span class="p">;</span>
 	<span class="p">}</span>
-<span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
-<span class="c1">#=&gt; prints 'Hello world' to console.</span></code></pre></figure>
-
-<p>java 中的值传递还是引用传递的问题，首先java中是值传递，对调用的方法里改了引用是指影响该方法的，对原方法没有影响，传递的是copy的副本，浅copy，copy出来的对象引用的内容仍旧和原对像一样，像这里的name和age，在方法里改了也影响原对象。</p>
+<p>java 中的值传递还是引用传递的问题，首先java中是值传递，对调用的方法里改了引用是只影响该方法的，对原方法没有影响，传递的是copy的副本，浅copy，copy出来的对象引用的内容仍旧和原对像一样，像这里的name和age，在方法里改了也影响原对象。</p>
 </p>
           </div>
         </div><!-- .col-md-7 close -->
