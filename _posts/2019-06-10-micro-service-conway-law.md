@@ -18,7 +18,7 @@ Micro Service - Conway's Law
 	
 	系统设计团队的组织构成，团队内外的沟通结构，很大程度上决定了其设计出来的产品，更加简明的，组织形式等于系统设计
 
-第一定律：Communication dictates design（组织沟通方式会通过系统设计表达出来）
+**第一定律：Communication dictates design（组织沟通方式会通过系统设计表达出来）**
 
 组织的沟通和系统设计间的紧密联系，解决好人与人之间的沟通，是一个好的系统设计很重要的点。《人月神话》中有一句著名的话：
 
@@ -26,8 +26,8 @@ Micro Service - Conway's Law
 
 沟通成本 = n(n-1)/2,算法复杂度为O(n^2)。沟通成本随着项目人数的增加呈指数级增长
 
-第二定律：There is never enough time to do something right, but there is always enough time to do it over
-（时间再多一件事情也不可能做的完美，但总有时间做完一件事情）
+**第二定律：There is never enough time to do something right, but there is always enough time to do it over
+（时间再多一件事情也不可能做的完美，但总有时间做完一件事情）**
 
 	Problem too complicated? Ignore details. 
 	
@@ -51,8 +51,8 @@ Micro Service - Conway's Law
 错误流淌在分布式系统的血液里。解决方法不是消灭这些问题，而是容忍这些问题，在问题发生时，能自动回复，微服务组成的系统，
 每一个微服务都可能挂掉，这是常态，我们只有有足够的冗余和备份即可。即所谓的 弹性设计（Resilience） 或者叫高可用设计（High Availability）。
 
-第三定律：There is a homomorphism from the linear graph of a system to the linear graph of its design organization
-（线型系统和线型组织架构间有潜在的异质同态特性）        
+**第三定律：There is a homomorphism from the linear graph of a system to the linear graph of its design organization
+（线型系统和线型组织架构间有潜在的异质同态特性）**
 
 组织和设计间内在关系。更直白的说，你想要什么样的系统，就搭建什么样的团队。
 
@@ -62,8 +62,8 @@ Micro Service - Conway's Law
   在一个团队内全栈，让团队自治，原因就是因为如果团队按照这样的方式组建，将沟通的成本维持在系统内部，每个子系统就会更加内聚，
   彼此的依赖耦合能变弱，跨系统的沟通成本也就能降低。
   
-第四定律： The structures of large systems tend to disintegrate during development, qualitatively more so than with small systems
-（大的系统组织总是比小系统更倾向于分解）
+**第四定律： The structures of large systems tend to disintegrate during development, qualitatively more so than with small systems
+（大的系统组织总是比小系统更倾向于分解）**
 
 我们的组织一般是如何解决这个沟通问题的呢？Divide and conquer,分而治之。
 
