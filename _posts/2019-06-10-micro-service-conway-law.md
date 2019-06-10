@@ -8,7 +8,7 @@ author: "Danfei"
 
 Micro Service - Conway's Law
 
-参考自：https://www.cnblogs.com/gudi/p/6685474.html
+参考自：<https://www.cnblogs.com/gudi/p/6685474.html>
 
 微服务的很多核心理念其实在半个世纪前就被提出了，并且在软件飞速发展的这半个世纪不断被验证，它就是康威定律(Conway's Law).
 
