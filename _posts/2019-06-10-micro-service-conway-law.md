@@ -14,8 +14,7 @@ Micro Service - Conway's Law
 
 在康威的这篇文章中最著名的一句话是：
 	
-	Organizations which design systems are constrained to produce which are copied of the communication structures of these organizations. 
-	- Melvin Conway(1967)
+	Organizations which design systems are constrained to produce which are copied of the communication structures of these organizations. - Melvin Conway(1967)
 	
 	系统设计团队的组织构成，团队内外的沟通结构，很大程度上决定了其设计出来的产品，更加简明的，组织形式等于系统设计
 
