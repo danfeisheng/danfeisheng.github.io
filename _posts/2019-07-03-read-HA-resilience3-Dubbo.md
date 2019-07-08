@@ -41,4 +41,4 @@ SPI全称为Service Provider Interface，是JDK内置的一种服务提供发现
 
 Dubbo与注册中心的结构图：
 
-![avatar](http://assets.processon.com/chart_image/5d234535e4b04889888361e1.png)
+![avatar](https://www.processon.com/view/link/5d234535e4b0aad4c929b27c)
