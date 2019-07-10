@@ -63,7 +63,7 @@ InvocationHandler接口的invoke方法来调用。
 	因网络，超时等异常长时间出现后，Dubbo通过正常的通信协议（比如Netty）无法正常工作，则可以考虑采用其他的通信方式，比如Hessian或HTTP的方式，一些非
 	关键和实时的数据也可以调用本地缓存的数据返回。
 	
-**容错负载：**
+** 容错负载：**
 	
 	容错负载是Dubbo的重要组成模块，该模块实现了多种集群特性，还实现了目录服务，负债均衡，路由策略，和服务治理配置等特性。
 	
@@ -72,3 +72,42 @@ InvocationHandler接口的invoke方法来调用。
 	- Cluster将Directory中的多个Invoker伪装成一个Invoker，伪装过程包含了容错逻辑，调用失败后，重试另一个
 	- Router可以从多个Invoker中通过路由规则进行过滤和筛选
 	- LoadBalance可以从多个Invoker中选出一个
+	
+** 负载均衡：**
+	
+	- RoundRobin LoadBalance：权重轮询算法，按照公约后的权重设置轮询比例
+	
+	原理：把来自用户的请求轮流分配给内部的服务器，例如从1开始一直到N，N是服务器的总数，然后重新开始循环
+	
+	- LeastActive LoadBalance：最少活跃调用数均衡发
+	
+	原理：最少活跃调用数，活跃数指调用前后计数差，使慢的机器收到更少
+	
+	- ConsistentHash LoadBalance：一致性Hash算法
+	
+	原理：一致性Hash，相同参数的请求总是发到同一个提供者，一致性Hash算法可以解决服务提供者的增加，移除以及挂掉的情况，也可以通过构建虚拟节点，尽可能
+	避免分配失衡，具有很好的平衡性
+	
+	- Random LoadBalance：随机均衡算法（** Dubbo默认的负载均衡策略 **）
+	原理：按照权重设置随机几率，如果每个提供者的权重都相同，那么根据列表长度直接随机选取一个，如果权重不同，则累加权重值，从0~累加的权重值中选取一个
+	随机数，然后判断该随机数落在哪个提供者上
+	
+** 集群策略：**
+
+	- Failover Cluster：失败转移。当出现失败时，重试其他服务器，通常用于读操作，但重试会带来更长的延迟（** 默认集群策略 **）
+	- Failfast Cluster：快速失败。只发起一次调用，失败立即报错，通常用于非幂等性操作
+	- Failback Cluster：失败自动恢复。对于Invoker调用失败，后台记录失败请求，任务定时重发，通常用户通知。
+	- Broadcast Cluster：广播调用。遍历所有Invokers，如果调用某个Invoker报错，则catch住异常，这样就不影响其他Invoker调用
+	- Available Cluster：获取可用的调用。遍历所有Invokers并判断Invoker.isAvliable，只要有一个为true就直接调用返回，不管成不成功
+	- Failsafe Cluster：失败安全。出现异常时直接忽略，通常用于写入审计日志等操作。
+	- Forking Cluster：并行调用。** 只要一个成功即返回，通常用于实时性要求较高的操作，但需要浪费更多的服务资源 **
+	- Mergeable Cluster：分组聚合。按组合并返回结果，比如某个服务接口有多种实现，可以用group分区，调用者调用多种实现并将得到的结果合并
+	
+默认的集群策略类FailoverClusterInvoker，通过doInvoke方法发起调用，FailoverClusterInvoker的重试次数默认是2次，所以最多执行3次。每一次重试都要新获取
+可用的服务列表，然后根据选定的负载均衡策略选择出一个可用的服务调用，如果调用失败，则要判断当前异常是否是业务异常，如果是则不重试直接抛出异常。
+	
+** 在FailoverClusterInvoker实例中，通过select方法选择服务，在选择出一个可用的服务后，就正式进入调用环节了，也就是Result result = invoker.invoke(invocation)。
+** 这行代码会经过一系列的Filter通过配置好的通信协议，远程调用响应的Provider，执行并返回结果，返回结果和异常信息全部封装到Result对象中，最终实现一次完整
+** 的调用过程
+
+Filter是一种递归的链式调用，用来在远程调用真正执行的前后加入一些逻辑，跟AOP的拦截器Servlet中Filter概念一样。
