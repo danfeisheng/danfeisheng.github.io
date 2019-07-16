@@ -111,3 +111,21 @@ InvocationHandler接口的invoke方法来调用。
 ** 的调用过程
 
 Filter是一种递归的链式调用，用来在远程调用真正执行的前后加入一些逻辑，跟AOP的拦截器Servlet中Filter概念一样。
+
+我们在使用Netty进行消息通信的时候，ChannelHandler的send方法只负责不断地发送消息，而received方法只负责不断地接收消息，整个过程是异步的。
+
+	+ 如果不需要返回值则直接使用send方法将信息发送出去
+	+ 如果需要异步通信（isAsync为true），则使用request方法构建一个ResponseFuture，然后将ResponseFuture封装成FutrueAdapter，在绑定RpcContext中。
+	+ 如果需要同步通信（isAsync为false），则使用request方法构建一个ResponseFuture，阻塞等待请求完成
+	
+在异步通信的情况下，将ResponseFuture和当前线程绑定在RpcContext（ThreadLocal的封装）对象中，如果要获取异步结果，则需要通过RpcContext来获取当前线程
+绑定的ResponseFuture，然后获取Future对象，通过get()方法得到返回值。有两种方法可以唤醒get方法
+
+	+ 收到响应消息并调用received方法，根据响应消息中返回的ID在ConcurrentHashMap里使用getID()方法获取DefaultFuture对象，然后更新该对象的Response变量的值
+	+ RemotingInvocationTimeoutScan 线程定时扫描响应是否超时，如果超时，则从ConcurrentHashMap对象中删除掉缓存的Future对象并将Response变量设置为超时信息
+	
+通过HandlerExchangeHandle对象的handleResponse方法收到响应请求后，调用DefaultFuture.received()方法，从缓存中根据ID获取DefaultFuture对象，然后从FUTURES
+中删除，再将响应结果赋值给response对象从而触发isDone方法的状态变更。
+
+	
+	
